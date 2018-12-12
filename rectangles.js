@@ -13,17 +13,6 @@ let rectangles = [
 ];
 
 //================================================================
-
-// Predicate (color)
-let hasColor = predicate => item => item.color === predicate;
-
-let filterByColor = predicate => items => items.filter(hasColor(predicate));
-let calculate = operation => items => items.map(operation);
-let sum = items => items.reduce( (sum, current) => sum + current);
-
-let flow = (color, operation, items) => sum(calculate(operation)(filterByColor(color)(items)));
-
-//================================================================
 // Operations
 
 let area = item => item.width * item.height;
@@ -31,7 +20,41 @@ let perimeter = item => 2 * (item.width + item.height);
 
 //================================================================
 
+// Predicate (color)
+let hasColor = color => item => item.color === color;
+
+let filterByColor = predicate => items => items.filter(hasColor(predicate));
+let calculate = operation => items => items.map(operation);
+let sum = items => items.reduce((sum, current) => sum + current);
+
+let flow = (color, operation, items) => sum(calculate(operation)(filterByColor(color)(items)));
+let flow2 = (color, operation, items) => items.filter(hasColor(color)).map(operation).reduce((sum, current) => sum + current);
+
 console.log(
-    flow("black", area, rectangles),
-    flow("black", perimeter, rectangles)
+    flow('black', area, rectangles),
+    flow2('black', area, rectangles)
 );
+
+// let flow = (f1,f2,f3) => {
+//     return data => f3(calculate(f2)(filterByColor(f1)(data)));
+// };
+// console.log(
+//     flow(
+//         filter(hasColor('black')),
+//         calculate(area),
+//         sum()
+//     )(data)
+// );
+
+//================================================================
+
+
+
+
+
+
+
+
+
+
+
