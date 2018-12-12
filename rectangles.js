@@ -6,14 +6,14 @@ function rectangle(color, width, height) {
 
 let rectangles = [
     new rectangle("black", 2, 3),
-    new rectangle("red", 3, 3),
-    new rectangle("red", 2, 2),
-    new rectangle("black", 1, 2),
-    new rectangle("black", 2, 1)
+    new rectangle("black", 3, 3),
+    new rectangle("green", 2, 2),
+    new rectangle("yellow", 1, 2),
+    new rectangle("green", 2, 1)
 ];
 
-function calculateValuesOfRectangles(color) {
-    return function (items) {
+function calculateValuesOfRectangles(items) {
+    return function (color) {
         return function (operation) {
             let result = 0;
 
@@ -26,13 +26,16 @@ function calculateValuesOfRectangles(color) {
     };
 }
 
+// Predicate
 function isColor(color) {
     return function (item) {
         return item.color === color;
     }
 }
 
+
 //=============================================
+// Operations
 
 let square = function (item) {
     return item.width * item.height;
@@ -44,8 +47,14 @@ let perimeter = function (item) {
 
 //=============================================
 
+function findValue(rectangles, color, operation) {
+    return calculateValuesOfRectangles(rectangles)(color)(operation)
+}
+
 console.log(
-    // Select rectangles with color
-    calculateValuesOfRectangles("red")(rectangles)(square),
-    calculateValuesOfRectangles("red")(rectangles)(perimeter)
+    findValue(rectangles, 'black', square)
+);
+
+console.log(
+    findValue(rectangles, 'black', perimeter)
 );
